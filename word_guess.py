@@ -3,7 +3,8 @@
 import random
 
 all_words = ["apple", "orange", "strawberry", "grape", "raspberry",
-             "kiwi", "pear", "grapefruit", "cranberry", "peach"]
+             "kiwi", "pear", "grapefruit", "cranberry", "peach",
+             "pineapple", "lemon", "lime", "cherry", "watermelon"]
 
 def make_word_guess(word):
     """This function creates a list of dashes to substitute the word to guess"""
@@ -73,10 +74,17 @@ def game_start(words):
        to play again"""
     word_to_guess = random.choice(words)
     game_word = make_word_guess(word_to_guess)
-    strikes_left = 9
+    #strikes_left = 9
     print("\nWelcome to WORD GUESS: FRUIT EDITION!")
     print("*************************************")
-    print("\nGuess the fruit!\n")
+    choose_diff = input("Choose your difficulty! ('Easy', 'Normal', or 'Hard'):\n")
+    if choose_diff.lower() == 'easy':
+        strikes_left = 9
+    elif choose_diff.lower() == 'normal':
+        strikes_left = 6
+    elif choose_diff.lower() == 'hard':
+        strikes_left = 3
+    print("\nNow guess the fruit!\n")
     user_turns(word_to_guess, game_word, strikes_left)
 
 game_start(all_words)
