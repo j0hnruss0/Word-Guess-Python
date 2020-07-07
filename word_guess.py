@@ -33,11 +33,12 @@ def end_game(word, puzzle, strikes):
 
 def user_turns(word, puzzle, strikes):
     """Handles how each turn is resolved (i.e. conditions for right and wrong guesses)"""
+    guessed_letters = set()
     while strikes > 0 and word != "".join(puzzle):
         print(" ".join(puzzle) + "\n")
         print("Guesses left: " + str(strikes))
         user_guess = input("Your Guess (letters only): ")
-        if user_guess.isalpha() and len(user_guess) == 1:
+        if user_guess.isalpha() and len(user_guess) == 1 and user_guess not in guessed_letters:
             index_pos_list = []
             index_pos = 0
             print("You guessed '" + user_guess + "'")
@@ -48,6 +49,7 @@ def user_turns(word, puzzle, strikes):
                 strikes -= 1
                 if strikes >= 1:
                     print("\nNEXT ROUND! Keep Guessing!\n")
+            guessed_letters.add(user_guess.lower())
             while True:
                 try:
                     index_pos = word.index(user_guess, index_pos)
@@ -57,11 +59,8 @@ def user_turns(word, puzzle, strikes):
                     break
             for letter_index in index_pos_list:
                 puzzle[letter_index] = word[letter_index]
-            #print(index_pos_list)
-
-            #for x in word:
-                #if x == user_guess.lower() and puzzle[word.index(x) != x]:
-                    #puzzle[word.index(x)] = x
+        elif user_guess.lower() in guessed_letters:
+            print("You already guessed that letter. Try again!\n")
         elif user_guess.isalpha() and len(user_guess) > 1:
             print("one letter at a time, please!\nLet's try that again! Enter a letter to guess!\n")
         else:
